@@ -2,7 +2,7 @@ import datetime
 import hashlib
 import json
 
-from app.blockchain.types import Block
+from blockchain.types import Block
 
 
 class Blockchain:
@@ -10,7 +10,7 @@ class Blockchain:
         self.chains = []
         self.create_block(proof=0, previous_hash='0')  # genesis block
 
-    def create_block(self, proof, previous_hash):
+    def create_block(self, proof, previous_hash) -> Block:
         block = Block(
             index=len(self.chains) + 1,
             timestamp=str(datetime.datetime.now()),
@@ -18,6 +18,8 @@ class Blockchain:
             previous_hash=previous_hash, )
 
         self.chains.append(block)
+        return block
+
 
     def get_previous_block(self) -> Block:
         return self.chains[-1]
@@ -42,6 +44,9 @@ class Blockchain:
 
     def is_chain_valid(self):
         for index, block in enumerate(self.chains):
+            if index == 0:
+                continue
+
             previous_block = self.chains[index - 1]
 
             if block.previous_hash != self.hash(previous_block):

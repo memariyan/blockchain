@@ -17,6 +17,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from blockchain.views import BlockchainBlockView, BlockchainCheckView, BlockchainView
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/blockchain', BlockchainView.as_view(), ),
+    path('api/blockchain/check', BlockchainCheckView.as_view(), ),
+    path('api/blockchain/block', BlockchainBlockView.as_view(), ),
+
 ]
