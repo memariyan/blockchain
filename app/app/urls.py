@@ -17,13 +17,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from blockchain.views import BlockchainCheckView, BlockchainView
+from blockchain.views import BlockchainCheckView, BlockchainView, BlockchainConnectNodeView, BlockchainUpdateView
 from cryptocurrency.views import MomoMineView, AddTransactionView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/blockchain', BlockchainView.as_view(), ),
     path('api/blockchain/check', BlockchainCheckView.as_view(), ),
+    path('api/blockchain/update', BlockchainUpdateView.as_view(), ),
+    path('api/blockchain/nodes/connect', BlockchainConnectNodeView.as_view(), ),
     path('api/blockchain/momo/mine', MomoMineView.as_view(), ),
     path('api/blockchain/momo/transaction', AddTransactionView.as_view(), ),
 

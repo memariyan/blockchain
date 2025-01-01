@@ -1,4 +1,5 @@
 import json
+import os
 import uuid
 
 from django.http import JsonResponse
@@ -8,8 +9,9 @@ from rest_framework.response import Response
 from rest_framework.views import APIView as RestAPIView
 
 from blockchain.blockchain import blockchain
+from cryptocurrency.mempool import MemPool
 from cryptocurrency.momocoin import MomoCoin
-from cryptocurrency.types import Transaction, MemPool, TransactionRequest
+from cryptocurrency.types import Transaction, TransactionRequest
 
 mem_pool = MemPool()
 node_address = str(uuid.uuid4()).replace('-', '')
@@ -24,7 +26,7 @@ class MomoMineView(RestAPIView):
         new_block = MomoCoin(ready_transactions, blockchain.get_previous_block())
         blockchain.append(new_block)
         mem_pool.confirm(ready_transactions)
-        mem_pool.add(Transaction(node_address, 'mohammad', 1))  # reward of mining
+        mem_pool.add(Transaction(node_address, os.environ.get('MINER_ACCOUNT_ADDRESS'), 1))  # reward of mining
 
         return Response(data=new_block.__dict__, status=status.HTTP_201_CREATED)
 

@@ -1,0 +1,44 @@
+services:
+  node-alpha:
+    image: momo-coin:latest
+    ports:
+      - "8001:8000"
+    command: >
+      sh -c "python manage.py runserver 0.0.0.0:8000"
+    networks:
+      - node-alpha
+      - node-beta
+      - node-gamma
+    environment:
+      - MINER_ACCOUNT_ADDRESS=mohammad
+
+  node-beta:
+    image: momo-coin:latest
+    ports:
+      - "8002:8000"
+    command: >
+      sh -c "python manage.py runserver 0.0.0.0:8000"
+    networks:
+      - node-alpha
+      - node-beta
+      - node-gamma
+    environment:
+      - MINER_ACCOUNT_ADDRESS=sara
+
+  node-gamma:
+    image: momo-coin:latest
+    ports:
+      - "8003:8000"
+    command: >
+      sh -c "python manage.py runserver 0.0.0.0:8000"
+    networks:
+      - node-alpha
+      - node-beta
+      - node-gamma
+    environment:
+      - MINER_ACCOUNT_ADDRESS=david
+
+networks:
+   node-alpha : {}
+   node-beta : {}
+   node-gamma : {}

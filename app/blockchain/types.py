@@ -1,23 +1,7 @@
-import hashlib
-import json
-from abc import ABC
+from typing import List
+
+from pydantic import BaseModel
 
 
-class Block(ABC):
-
-    def __init__(self, index: int, timestamp: str, data, nonce: int, previous_hash: str):
-        self.index = index
-        self.timestamp = timestamp
-        self.nonce = nonce
-        self.previous_hash = previous_hash
-        self.data = data
-
-    def hash(self) -> str:
-        encoded_block = json.dumps(self.__dict__, sort_keys=True).encode()
-        return hashlib.sha256(encoded_block).hexdigest()
-
-    def proof_of_work(self, previous_block) -> int:
-        return 0
-
-    def check_proof_of_work(self, nonce: int, previous_block) -> bool:
-        return False
+class NodeConnectionRequest(BaseModel):
+    nodes: List[str]

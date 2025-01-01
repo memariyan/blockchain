@@ -3,10 +3,11 @@ from urllib.parse import urlparse
 
 import requests
 
-from blockchain.types import Block
+from blockchain.block import Block
 
 
 class Blockchain:
+
     def __init__(self):
         self.chains = []
         self.nodes = set()
@@ -54,7 +55,7 @@ class Blockchain:
         longest_chain = None
         max_length = len(self.chains)
         for node in network:
-            response = requests.get(f'http://{node}/blockchain')
+            response = requests.get(f'http://{node}/api/blockchain')
             response.raise_for_status()
             node_chain = response.json()['chain']
             chain_length = len(node_chain)

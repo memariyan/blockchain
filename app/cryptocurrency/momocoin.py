@@ -1,9 +1,8 @@
 import datetime
 import hashlib
-from functools import cached_property
 from typing import List
 
-from blockchain.types import Block
+from blockchain.block import Block
 from cryptocurrency.types import Transaction
 
 
